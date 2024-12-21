@@ -2,18 +2,24 @@
 <html>
     <head>
         <title>Square</title>
+        <style>
+            img{
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
     </head>
     <body>
         <h1>Area of Square</h1>
         <form action="add" method="post">
             {% csrf_token %}
+            <img src="https://i0.wp.com/junilearning.com/wp-content/uploads/2023/12/image-198.png?resize=800%2C312&ssl=1" width="260" height="100">
             {{ form }}
+            <input type="submit">
         </form>
-        <input type="submit">
         {% for task in tasks %}
             <p>The solution is {{ task }}</p>
         {% endfor %}  
-        <img src="https://i0.wp.com/junilearning.com/wp-content/uploads/2023/12/image-198.png?resize=800%2C312&ssl=1" width="260" height="100">
         <a href="index">Back to shapes</a>
     </body>
 </html>

@@ -1,17 +1,16 @@
 from django.shortcuts import render
 from django import forms
-
 tasks = [""]
 class NewTaskForm(forms.Form):
     task = forms.DecimalField(label="Side", min_value=0.000000000000000001)
 
 # Create your views here.
+
 def index(request):
     return render(request, "tasks/index.html", {
-        "tasks": tasks
     })
 
-def square(request):
+def add(request):
     if request.method == "POST":
         form = NewTaskForm(request.POST)
         if form.is_valid():
@@ -23,6 +22,6 @@ def square(request):
                 "form": form,
             })
     return render(request, "tasks/add.html", {
-        "form": NewTaskForm,
-        "tasks": tasks
-    })
+         "form": NewTaskForm(),
+         "tasks": tasks
+     })
