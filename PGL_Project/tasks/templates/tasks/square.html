@@ -4,12 +4,13 @@
         <title>Square</title>
         <style>
             h1 {
-                text-align: center;
+                text-align: left;
             }
             body {
                 margin: 20px;
                 text-align: left;
                 font-family:'Courier New', Courier, monospace;
+                background-color: powderblue;
             }
             .container{
                 float:left;
@@ -18,15 +19,15 @@
         </style>
     </head>
     <body>
-        <h1>Area of Square</h1>
+        <div class="container">
+            <img src="https://i0.wp.com/junilearning.com/wp-content/uploads/2023/12/image-198.png?resize=800%2C312&ssl=1" width="260" height="100">
+            <p> </p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20230310130236/Perimeter-of-Square-2.png" alt="bruh" width="165" height="100" float="right">
+        </div>
+        <h1>Square Calculator</h1>
         <form action="square" method="post">
             {% csrf_token %}
-            <div class="container">
-                <img src="https://i0.wp.com/junilearning.com/wp-content/uploads/2023/12/image-198.png?resize=800%2C312&ssl=1" width="260" height="100">
-                <p> </p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20230310130236/Perimeter-of-Square-2.png" alt="bruh" width="165" height="100">
-            </div>
             {{ form }}
-            <input type="submit">
+            <input type="submit" value="Submit" enabled>
         </form>
         {% for stuff in area %}
             <p>The area is {{ stuff }}</p>
