@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Square</title>
+        <style>
+            h1 {
+                text-align: center;
+            }
+            body {
+                margin: 20px;
+                text-align: left;
+                font-family:'Courier New', Courier, monospace;
+            }
+            .container{
+                float:left;
+                margin: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Area of Square</h1>
+        <form action="square" method="post">
+            {% csrf_token %}
+            <div class="container">
+                <img src="https://i0.wp.com/junilearning.com/wp-content/uploads/2023/12/image-198.png?resize=800%2C312&ssl=1" width="260" height="100">
+                <p> </p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20230310130236/Perimeter-of-Square-2.png" alt="bruh" width="165" height="100">
+            </div>
+            {{ form }}
+            <input type="submit">
+        </form>
+        {% for stuff in area %}
+            <p>The area is {{ stuff }}</p>
+        {% endfor %}  
+        {% for stuff in perimeter %}
+            <p>The perimeter is {{ stuff }}</p>
+        {% endfor %}
+        <a href="index">Back to shapes</a>
+    </body>
+</html>

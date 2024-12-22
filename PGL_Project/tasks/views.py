@@ -1,27 +1,30 @@
 from django.shortcuts import render
 from django import forms
-tasks = [""]
+area = [""]
+perimeter = [""]
 class NewTaskForm(forms.Form):
-    task = forms.DecimalField(label="Side", min_value=0.000000000000000001)
-
+    side = forms.DecimalField(label="Side", min_value=0.000000000000000001)
 # Create your views here.
 
 def index(request):
     return render(request, "tasks/index.html", {
     })
 
-def add(request):
+def square(request):
     if request.method == "POST":
         form = NewTaskForm(request.POST)
         if form.is_valid():
-            task = form.cleaned_data["task"]
-            tasks.pop(0)
-            tasks.append(task * task)
+            side = form.cleaned_data["side"]
+            perimeter.pop(0)
+            perimeter.append(side * 4)
+            area.pop(0)
+            area.append(side * side)
         else:
-            return render(request, "tasks/add.html", {
+            return render(request, "tasks/square.html", {
                 "form": form,
             })
-    return render(request, "tasks/add.html", {
+    return render(request, "tasks/square.html", {
          "form": NewTaskForm(),
-         "tasks": tasks
+         "area": area,
+         "perimeter": perimeter,
      })
