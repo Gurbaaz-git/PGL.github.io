@@ -13,7 +13,10 @@ RectArea = [""]
 RectPerimeter = [""]
 TriArea = [""]
 TriPerimeter = [""]
-
+base = 0;
+side_1 = 0;
+side_2 =0;
+ 
 # My form data:
 
 class NewTaskForm(forms.Form):
@@ -24,13 +27,11 @@ class RectangleForm(forms.Form):
     width = forms.DecimalField(label="Width", min_value=0.000000000000000001, max_value=99999999999999)
 
 class TriangleForm(forms.Form):
-    base = forms.DecimalField(label="Base", min_value=0.000000000000000001, max_value=99999999999999)
-    side_1 = forms.DecimalField(label="Side 1", min_value=0.000000000000000001, max_value=99999999999999)
-    side_2 = forms.DecimalField(label="Side 2", min_value=0.000000000000000001, max_value=99999999999999)
-    height = forms.DecimalField(label="Height", min_value=0.000000000000000001, max_value=99999999999999)
+    base = forms.FloatField(label="Base", min_value=0.000000000000000001, max_value=99999999999999)
+    side_1 = forms.FloatField(label="Side A", min_value=0.000000000000000001, max_value=99999999999999)
+    side_2 = forms.FloatField(label="Side B", min_value=0.000000000000000001, max_value=99999999999999)
 
 # My functions that run the pages:
-
     # Shapes page:
 
 def index(request):
@@ -84,14 +85,31 @@ def triangle(request):
     if request.method == "POST":
         form = TriangleForm(request.POST)
         if form.is_valid():
-            base = form.cleaned_data["base"]
-            side_1 = form.cleaned_data["side_1"]
-            side_2 = form.cleaned_data["side_2"]
-            height = form.cleaned_data["height"]
-            TriPerimeter.pop(0)
-            TriPerimeter.append(base + side_1 + side_2)
-            TriArea.pop(0)
-            TriArea.append((height * base)/2)
+            try:
+                global base
+                global side_1
+                global side_2
+                base = form.cleaned_data["base"]
+                side_1 = form.cleaned_data["side_1"]
+                side_2 = form.cleaned_data["side_2"]
+                b = base + side_2 + side_1
+                s = (b)/2
+                a = sqrt(s*(s-base)*(s-side_1)*(s-side_2))*base
+                if a != 0:
+                    TriPerimeter.pop(0)
+                    TriPerimeter.append(b)
+                    TriArea.pop(0)
+                    TriArea.append(a)
+                else:
+                    TriPerimeter.pop(0)
+                    TriPerimeter.append("nothing! Make sure base plus side A is greater than side B. Invalid")
+                    TriArea.pop(0)
+                    TriArea.append("nothing! Make sure base plus side A is greater than side B. Invalid")
+            except ValueError:
+                TriPerimeter.pop(0)
+                TriPerimeter.append("nothing! Make sure base plus side A is greater than side B. Invalid")
+                TriArea.pop(0)
+                TriArea.append("nothing! Make sure base plus side A is greater than side B. Invalid")
         else:
             return render(request, "tasks/triangle.html", {
                 "form" : form
@@ -99,5 +117,6 @@ def triangle(request):
     return render(request, "tasks/triangle.html", {
         "form" : TriangleForm(),
         "TriArea" : TriArea,
-        "TriPerimeter" : TriPerimeter
+        "TriPerimeter" : TriPerimeter,
+        "base" : (base + side_1) > side_2
     })
