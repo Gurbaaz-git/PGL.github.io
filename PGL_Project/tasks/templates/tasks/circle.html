@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Square</title>
+        <title>Circle</title>
         <style>
+            .btn-group {
+                float: right;
+            }
             h1 {
                 text-align: left;
             }
@@ -19,20 +22,20 @@
         </style>
     </head>
     <body>
+        <h1>Circle Calculator</h1>
         <div class="container">
-            <img src="https://curvebreakerstestprep.com/wp-content/uploads/2021/04/Perimeter-and-Area-of-a-Square-1.png" width="215" height="160">
+            <img src="https://curvebreakerstestprep.com/wp-content/uploads/2021/03/Circle-Area-with-Measurements.png" width="190" height="180">
         </div>
-        <h1>Square Calculator</h1>
-        <form action="square" method="post">
+        <form action="circle" method="post">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit">
         </form>
-        {% for stuff in SquareArea %}
+        {% for stuff in CirArea %}
             <p>The area is {{ stuff }} cm<sup>2</sup></p>
         {% endfor %}  
-        {% for stuff in SquarePerimeter %}
-            <p>The perimeter is {{ stuff }} cm</p>
+        {% for stuff in CirPerimeter %}
+            <p>The circumference is {{ stuff }} cm</p>
         {% endfor %}
         <a href="index">Back to Homepage</a>
     </body>

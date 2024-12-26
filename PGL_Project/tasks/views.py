@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django import forms
-from math import sqrt
+from math import sqrt, pi
 from decimal import *
 
 # The lists to tell the area and perimeter of shapes:
@@ -13,9 +13,11 @@ RectArea = [""]
 RectPerimeter = [""]
 TriArea = [""]
 TriPerimeter = [""]
-base = 0;
-side_1 = 0;
-side_2 =0;
+CirArea = [""]
+CirPerimeter = [""]
+base = 0
+side_1 = 0
+side_2 =0
  
 # My form data:
 
@@ -30,6 +32,9 @@ class TriangleForm(forms.Form):
     base = forms.FloatField(label="Base", min_value=0.000000000000000001, max_value=99999999999999)
     side_1 = forms.FloatField(label="Side A", min_value=0.000000000000000001, max_value=99999999999999)
     side_2 = forms.FloatField(label="Side B", min_value=0.000000000000000001, max_value=99999999999999)
+
+class CircleForm(forms.Form):
+    radius = forms.FloatField(label="Radius", min_value=0.000000000000000001, max_value=99999999999999, required=False)
 
 # My functions that run the pages:
     # Shapes page:
@@ -81,6 +86,8 @@ def rectangle(request):
          "RectPerimeter": RectPerimeter,
      })
 
+    # Triangle page:
+
 def triangle(request):
     if request.method == "POST":
         form = TriangleForm(request.POST)
@@ -102,14 +109,14 @@ def triangle(request):
                     TriArea.append(a)
                 else:
                     TriPerimeter.pop(0)
-                    TriPerimeter.append("nothing! Make sure base plus side A is greater than side B. Invalid")
+                    TriPerimeter.append("nothing! Make sure one side plus another side is greater than the third side. Invalid")
                     TriArea.pop(0)
-                    TriArea.append("nothing! Make sure base plus side A is greater than side B. Invalid")
+                    TriArea.append("nothing! Make sure one side plus another side is greater than the third side. Invalid")
             except ValueError:
                 TriPerimeter.pop(0)
-                TriPerimeter.append("nothing! Make sure base plus side A is greater than side B. Invalid")
+                TriPerimeter.append("nothing! Make sure one side plus another side is greater than the third side. Invalid")
                 TriArea.pop(0)
-                TriArea.append("nothing! Make sure base plus side A is greater than side B. Invalid")
+                TriArea.append("nothing! Make sure one side plus another side is greater than the third side. Invalid")
         else:
             return render(request, "tasks/triangle.html", {
                 "form" : form
@@ -118,5 +125,23 @@ def triangle(request):
         "form" : TriangleForm(),
         "TriArea" : TriArea,
         "TriPerimeter" : TriPerimeter,
-        "base" : (base + side_1) > side_2
+    })
+
+def circle(request):
+    if request.method == "POST":
+        form = CircleForm(request.POST)
+        if form.is_valid():
+            radius = form.cleaned_data["radius"]
+            CirPerimeter.pop(0)
+            CirPerimeter.append(radius * radius * 3.141259)
+            CirArea.pop(0)
+            CirArea.append(radius * 2 * 3.141259)
+        else:
+            return render(request, "tasks/circle.html", {
+                "form" : form
+            })
+    return render(request, "tasks/circle.html", {
+        "form" : CircleForm(),
+        "CirArea" : CirArea,
+        "CirPerimeter" : CirPerimeter
     })
