@@ -46,6 +46,8 @@ def index(request):
     # Square page:
 
 def square(request):
+    SquareArea = [""]
+    SquarePerimeter = [""]
     if request.method == "POST":
         form = NewTaskForm(request.POST)
         if form.is_valid():
@@ -67,6 +69,8 @@ def square(request):
     # Rectangle page:
 
 def rectangle(request):
+    RectArea = [""]
+    RectPerimeter = [""]
     if request.method == "POST":
         form = RectangleForm(request.POST)
         if form.is_valid():
@@ -89,6 +93,8 @@ def rectangle(request):
     # Triangle page:
 
 def triangle(request):
+    TriArea = [""]
+    TriPerimeter = [""]
     if request.method == "POST":
         form = TriangleForm(request.POST)
         if form.is_valid():
@@ -100,8 +106,10 @@ def triangle(request):
                 side_1 = form.cleaned_data["side_1"]
                 side_2 = form.cleaned_data["side_2"]
                 b = base + side_2 + side_1
-                s = (b)/2
-                a = sqrt(s*(s-base)*(s-side_1)*(s-side_2))*base
+                z = base
+                y = side_1
+                x = side_2
+                a = 0.25 * sqrt((z + y + x) * (-z + y + x) * (z - y + x) * (z + y - x))
                 if a != 0:
                     TriPerimeter.pop(0)
                     TriPerimeter.append(b)
@@ -128,6 +136,8 @@ def triangle(request):
     })
 
 def circle(request):
+    CirArea = [""]
+    CirPerimeter = [""]
     if request.method == "POST":
         form = CircleForm(request.POST)
         if form.is_valid():
