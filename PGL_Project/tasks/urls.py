@@ -7,4 +7,5 @@ urlpatterns = [
     path("rectangle", views.rectangle, name="rectangle"),
     path("triangle", views.triangle, name="triangle"),
     path("circle", views.circle, name="circle"),
+    path("", views.start, name="Start")
 ]

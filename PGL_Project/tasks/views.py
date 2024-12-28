@@ -37,6 +37,9 @@ class CircleForm(forms.Form):
     radius = forms.FloatField(label="Radius", min_value=0.000000000000000001, max_value=99999999999999, required=False)
 
 # My functions that run the pages:
+
+def start(request):
+    return render(request, "tasks/start.html")
     # Shapes page:
 
 def index(request):
